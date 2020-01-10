@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from './Card';
+import { CardView } from './card';
 
 
 import { storiesOf } from '@storybook/react';
@@ -17,7 +17,7 @@ storiesOf('Card', module)
         });
 
         return (
-            <Card value={value} suit={suit} />
+            <CardView value={value} suit={suit} />
         )
     }
 )

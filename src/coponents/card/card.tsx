@@ -56,11 +56,12 @@ import { ReactComponent as C_QS } from "./svgs/QS.svg";
 import styles from "./card.module.css";
 
 type Suit = "C" | "D" | "H" | "S";
-
-export const Card: React.SFC<{
+export type CardValue = {
   suit: Suit;
   value: number;
-}> = ({ suit, value }) => {
+};
+
+export const CardView: React.SFC<CardValue> = ({ suit, value }) => {
   const picture = value.toString() + ((suit as unknown) as string);
   console.log(suit);
   const Component = getCardComponent(picture);

@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Card} from "./coponents/card/Card";
+import {CardView} from "./coponents/card/card";
 
 const App: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ const App: React.FC = () => {
         >
           Learn React
         </a>
-        <Card suit="C" value={13}/>
+        <CardView suit="C" value={13}/>
       </header>
     </div>
   );
