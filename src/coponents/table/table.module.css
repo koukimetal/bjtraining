@@ -1,4 +1,6 @@
 .player {
     display: flex;
 }
-  
+.dealer {
+    height: 160px;
+}

@@ -15,9 +15,9 @@ storiesOf('Table', module)
                 {
                     suit: 'H', value: 11
                 }
-            ]} dealer={{
+            ]} dealer={[{
                 suit: 'D', value: 2
-            }} />
+            }]} />
         )
     }
 )

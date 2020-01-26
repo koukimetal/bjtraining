@@ -1,9 +1,9 @@
 import React from 'react';
-import { CardView } from './card';
+import { fromString, CardsView } from './card';
 
 
 import { storiesOf } from '@storybook/react';
-import { withKnobs, select, number } from "@storybook/addon-knobs";
+import { withKnobs, select, number, array } from "@storybook/addon-knobs";
 
 storiesOf('Card', module)
     .addDecorator(withKnobs)
@@ -17,7 +17,14 @@ storiesOf('Card', module)
         });
 
         return (
-            <CardView value={value} suit={suit} />
+            <CardsView cards={[{suit, value}]}/>
+        )
+    }
+)    .add(
+    'Cards', () => {
+        const cards = array('cards', ["CA", "C2"]);
+        return (
+            <CardsView cards={cards.map(cardString => fromString(cardString))} />
         )
     }
 )

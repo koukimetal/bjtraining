@@ -59,18 +59,67 @@ type Suit = "C" | "D" | "H" | "S";
 export type CardValue = {
   suit: Suit;
   value: number;
+  shift?: number;
 };
 
-export const CardView: React.SFC<CardValue> = ({ suit, value }) => {
+const CardView: React.SFC<CardValue> = ({ suit, value, shift = 0 }) => {
   const picture = value.toString() + ((suit as unknown) as string);
-  console.log(suit);
   const Component = getCardComponent(picture);
   return (
-    <div className={styles.card}>
+    <div className={styles.card} style={{left: shift + 'px'}}>
       <Component width={"100px"} height={"150px"} />
     </div>
   );
 };
+
+export const CardsView: React.SFC<{cards: CardValue[]}> = ({ cards }) => {
+  return (
+    <div className={styles.cards}>
+      {cards.map((card, idx) => (<CardView {...card} shift={idx * 20} key={idx}/>))}
+    </div>
+  );
+};
+
+export const fromString = (cardString: string): CardValue => {
+  let suit: Suit;
+  switch (cardString[0]) {
+    case 'C':
+      suit = "C";
+      break;
+    case 'D':
+      suit = "D";
+      break;
+    case 'H':
+      suit = "H";
+      break;
+    case 'S':
+      suit = "S";
+      break;
+    default:
+      suit = "C";
+  };
+  let value: number;
+  switch (cardString[1]) {
+    case 'A':
+        value = 1;
+        break;
+    case 'K':
+      value = 13;
+      break;
+    case 'Q':
+      value = 12;
+      break;
+    case 'J':
+      value = 11;
+      break;
+    case 'X':
+      value = 10;
+      break;
+    default:
+      value = parseInt(cardString[1]);
+  }
+  return {suit, value};
+}
 
 const getCardComponent = (picture: string) => {
   switch (picture) {
