@@ -1,0 +1,12 @@
+.actionRoot {
+    display: flex;
+}
+
+.actionButtonWrapper {
+    margin: 5px 10px 0 0;
+}
+
+.actionButton {
+    font-size: xx-large;
+    border-radius: 10px;
+}

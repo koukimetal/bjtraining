@@ -1,0 +1,15 @@
+.root {
+    display: flex;
+}
+
+.hands {
+    display: flex;
+}
+
+.col {
+    padding-left: 10px;
+}
+
+.judge {
+    font-size: small;
+}

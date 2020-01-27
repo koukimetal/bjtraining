@@ -1,14 +1,11 @@
 import React from 'react';
 import { fromString, CardsView } from './card';
-
-
 import { storiesOf } from '@storybook/react';
 import { withKnobs, select, number, array } from "@storybook/addon-knobs";
 
-storiesOf('Card', module)
+storiesOf('CardView', module)
     .addDecorator(withKnobs)
-    .add(
-    'Card', () => {
+    .add('Card', () => {
         const suit = select("Suit", {
             C: 'C', D: 'D', H: 'H', 'S': 'S'
         }, 'C');
@@ -18,13 +15,11 @@ storiesOf('Card', module)
 
         return (
             <CardsView cards={[{suit, value}]}/>
-        )
-    }
-)    .add(
-    'Cards', () => {
+        );
+    })
+    .add('Cards', () => {
         const cards = array('cards', ["CA", "C2"]);
         return (
             <CardsView cards={cards.map(cardString => fromString(cardString))} />
-        )
-    }
-)
+        );
+    });

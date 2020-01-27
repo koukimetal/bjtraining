@@ -55,14 +55,16 @@ import { ReactComponent as C_QH } from "./svgs/QH.svg";
 import { ReactComponent as C_QS } from "./svgs/QS.svg";
 import styles from "./card.module.css";
 
-type Suit = "C" | "D" | "H" | "S";
+export type CardSuit = "C" | "D" | "H" | "S";
+export const AllSuits: CardSuit[] = ["C", "D", "H", "S"];
 export type CardValue = {
-  suit: Suit;
+  suit: CardSuit;
   value: number;
-  shift?: number;
 };
 
-const CardView: React.SFC<CardValue> = ({ suit, value, shift = 0 }) => {
+const CardView: React.SFC<{card: CardValue, shift?: number}> = ({
+   card: {suit, value} , shift = 0
+}) => {
   const picture = value.toString() + ((suit as unknown) as string);
   const Component = getCardComponent(picture);
   return (
@@ -75,13 +77,13 @@ const CardView: React.SFC<CardValue> = ({ suit, value, shift = 0 }) => {
 export const CardsView: React.SFC<{cards: CardValue[]}> = ({ cards }) => {
   return (
     <div className={styles.cards}>
-      {cards.map((card, idx) => (<CardView {...card} shift={idx * 20} key={idx}/>))}
+      {cards.map((card, idx) => (<CardView card={card} shift={idx * 20} key={idx}/>))}
     </div>
   );
 };
 
 export const fromString = (cardString: string): CardValue => {
-  let suit: Suit;
+  let suit: CardSuit;
   switch (cardString[0]) {
     case 'C':
       suit = "C";
