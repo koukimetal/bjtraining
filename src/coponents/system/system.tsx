@@ -63,7 +63,6 @@ export class System extends React.Component<Props, State> {
 
         const p1Suit = getSuit(usedSuits[player[1]] || []);
 
-        console.log(p0Suit, p1Suit);
         return {
             dealer: {value: dealer, suit: dealerSuit},
             player: [{
@@ -80,7 +79,6 @@ export class System extends React.Component<Props, State> {
         const {player, dealer} = this.getCards(draw, praw);
         const history = histories.length > 0 ? histories[0] : null;
 
-        console.log(player, dealer);
         return (
             <div>
                 <div>

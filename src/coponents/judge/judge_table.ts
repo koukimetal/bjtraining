@@ -123,6 +123,35 @@ export function generateSmallProblems() {
     return problems;
 }
 
+export function generateSmallerProblems() {
+    const problems: JudgeProblems[] = [];
+    for (let d = 1; d <= 10; d++) {
+        for (let p1 = 1; p1 <= 10; p1++) {
+            for (let p2 = p1; p2 <= 10; p2++) {
+                let skip = false;
+                if (isBJ(p1, p2)) {
+                    skip = true;
+                } else if (p1 === 1 || p2 === 1) {
+                    skip = false;
+                } else if (p1 === p2) {
+                    skip = false;
+                } else if (p1 + p2 > 16) {
+                    skip = true;
+                } else if (p1 + p2 < 9) {
+                    skip = true;
+                }
+                if (skip) {
+                    continue;
+                }
+                problems.push(
+                    new JudgeProblems(d, [p1, p2])
+                );
+            }
+        }
+    }
+    return problems;
+}
+
 export function getRandomInt(min: number, max: number) {
     min = Math.ceil(min);
     max = Math.floor(max);

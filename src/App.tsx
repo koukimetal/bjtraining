@@ -1,26 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {CardView} from "./coponents/card/card";
+import { System } from './coponents/system/system';
+import { generateSmallerProblems, shuffleArray } from './coponents/judge/judge_table';
 
 const App: React.FC = () => {
+  const problems = generateSmallerProblems();
+  shuffleArray(problems);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <CardView suit="C" value={13}/>
-      </header>
+      <System problems={problems}/>
     </div>
   );
 }

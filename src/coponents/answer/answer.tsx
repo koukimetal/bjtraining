@@ -27,7 +27,33 @@ export class AnswerFrame extends React.Component<Props> {
     }
 
     private readonly split = () => {
-        this.sendAction(Action.SPLIT);
+        const { splittable } = this.props;
+        if (splittable) {
+            this.sendAction(Action.SPLIT);
+        }
+    }
+
+    private readonly handleKeyDown = (event: KeyboardEvent) => {
+        switch(event.key) {
+            case "a":
+                this.hit();
+                return;
+            case "s":
+                this.stand();
+                return;
+            case "d":
+                this.double();
+                return;
+            case "f":
+                this.split();
+                return;
+            default:
+                return;
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyDown);
     }
 
     render() {
