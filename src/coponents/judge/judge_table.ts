@@ -13,7 +13,7 @@ function judgePair(d:number, p: number) {
         case 6:
             return d <= 7 ? Action.SPLIT : Action.HIT;
         case 7:
-            return d === 10 ? Action.STAND : d <= 8 ? Action.SPLIT : Action.HIT;
+            return d <= 8 ? Action.SPLIT : Action.HIT;
         case 8:
             return Action.SPLIT;
         case 9:
