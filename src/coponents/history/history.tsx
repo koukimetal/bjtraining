@@ -16,7 +16,6 @@ function shorten(action: Action) {
     return 'N';
 }
 
-
 export type History = {
     dealer: number;
     player: number[];
@@ -24,12 +23,11 @@ export type History = {
     answer: Action;
 };
 
-type Props = {
+type PreviousProps = {
     history: History
 };
 
-export class Previous extends React.Component<Props> {
-
+export class Previous extends React.Component<PreviousProps> {
     render() {
         const {history: {correct, answer, dealer, player}} = this.props;
         return (
@@ -65,3 +63,11 @@ export class Previous extends React.Component<Props> {
         );
     }
 }
+
+type HistoriesProps = {
+    histories: History[]
+};
+
+export const Histories: React.SFC<HistoriesProps> = ({histories}) => (
+    <>{histories.map((history, idx) => <Previous key={idx} history={history} />)}</>
+);

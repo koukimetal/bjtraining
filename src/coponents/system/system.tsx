@@ -1,7 +1,7 @@
 import React from "react";
 import { JudgeProblems, Action } from "../judge/judge";
 import { judgeAnswer, getRandomInt } from "../judge/judge_table";
-import { History } from "../history/history";
+import { History, Histories } from "../history/history";
 import { CardSuit, AllSuits, CardValue } from "../card/card";
 import { TableView } from "../table/table";
 import { AnswerFrame } from "../answer/answer";
@@ -11,6 +11,9 @@ interface State {
     histories: History[];
     problems: JudgeProblems[];
     index: number;
+    showingWrong: boolean;
+    player: CardValue[];
+    dealer: CardValue;
 }
 
 interface Props {
@@ -26,10 +29,17 @@ export class System extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+
+        const {player: praw, dealer: draw} = props.problems[0];
+        const {player, dealer} = this.getCards(draw, praw);
+
         this.state = {
             histories: [],
             problems: props.problems,
             index: 0,
+            showingWrong: false,
+            player,
+            dealer,
         };
     }
 
@@ -44,14 +54,22 @@ export class System extends React.Component<Props, State> {
 
         if (correct !== answer) {
             const [wrong] = problems.splice(index, 1);
+            const shiftedProblems = [...problems, wrong];
+            const {player: praw, dealer: draw} = shiftedProblems[index];
+            const {player, dealer} = this.getCards(draw, praw);
             this.setState({
-                problems: [...problems, wrong],
+                problems: shiftedProblems,
+                dealer, player,
                 histories: [history, ...histories],
             });
         } else {
+            const nextIndex = (index + 1) % problems.length;
+            const {player: praw, dealer: draw} = problems[nextIndex];
+            const {player, dealer} = this.getCards(draw, praw);
             this.setState({
                 index: (index + 1) % problems.length,
                 histories: [history, ...histories],
+                player, dealer,
             });    
         }
     }
@@ -82,11 +100,17 @@ export class System extends React.Component<Props, State> {
         };
     }
 
+    toggleWrong = () => {
+        const {showingWrong} = this.state;
+        this.setState({
+            showingWrong: !showingWrong
+        });
+    }
+
     render() {
-        const {problems, index, histories} = this.state;
-        const {player: praw, dealer: draw} = problems[index];
-        const {player, dealer} = this.getCards(draw, praw);
+        const {problems, index, histories, showingWrong, player, dealer} = this.state;
         const history = histories.length > 0 ? histories[0] : null;
+        const wrontHistories = histories.filter(history => history.answer !== history.correct);
 
         return (
             <div>
@@ -96,7 +120,7 @@ export class System extends React.Component<Props, State> {
                 <div>
                     <AnswerFrame
                     judgeCallBack={this.judgeCallBack}
-                    splittable={praw[0] === praw[1]}
+                    splittable={player[0].value === player[1].value}
                     />
                 </div>
                 {
@@ -105,6 +129,18 @@ export class System extends React.Component<Props, State> {
                     </div>)
                 }
                 <div>{index} / {problems.length}</div>
+                <div>
+                    <button onClick={this.toggleWrong}>{
+                        showingWrong ? 'Hide' : 'Show'
+                    } wrong</button>
+                </div>
+                {
+                    showingWrong && (
+                        <div>
+                            <Histories histories={wrontHistories} />
+                        </div>
+                    )
+                }
             </div>
         );
     }
