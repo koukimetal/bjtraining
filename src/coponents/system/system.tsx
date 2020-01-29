@@ -41,10 +41,19 @@ export class System extends React.Component<Props, State> {
         const history: History = {
             player, dealer, correct, answer
         };
-        this.setState({
-            index: (index + 1) % problems.length,
-            histories: [history, ...histories],
-        });
+
+        if (correct !== answer) {
+            const [wrong] = problems.splice(index, 1);
+            this.setState({
+                problems: [...problems, wrong],
+                histories: [history, ...histories],
+            });
+        } else {
+            this.setState({
+                index: (index + 1) % problems.length,
+                histories: [history, ...histories],
+            });    
+        }
     }
 
     getCards(dealer: number, player: number[]): {
